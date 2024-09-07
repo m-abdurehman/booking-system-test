@@ -1,4 +1,3 @@
-Here's a GitHub `README.md` format that includes Laravel project setup instructions and API documentation:
 
 ```markdown
 # Booking System API
