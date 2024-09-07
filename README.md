@@ -275,4 +275,3 @@ GET /api/services/search?latitude=31.5497&longitude=74.3436&range=25
 
 ---
 
-Feel free to adjust the details based on your specific implementation and requirements.
