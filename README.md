@@ -1,66 +1,279 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Here's a GitHub `README.md` format that includes Laravel project setup instructions and API documentation:
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+```markdown
+# Booking System API
 
-## About Laravel
+This project provides a basic booking system with essential features including user authentication, booking management, and service search functionality. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. [Project Setup](#project-setup)
+2. [API Documentation](#api-documentation)
+   - [User Authentication](#user-authentication)
+   - [Booking APIs](#booking-apis)
+   - [Service APIs](#service-apis)
+3. [User Guide](#user-guide)
+4. [Error Handling](#error-handling)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Setup
 
-## Learning Laravel
+### 1. Clone the Repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/your-username/booking-system-api.git
+cd booking-system-api
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Install Dependencies
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Make sure you have PHP and Composer installed. Then run:
 
-## Laravel Sponsors
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Set Up Environment Variables
 
-### Premium Partners
+Copy the example environment file and set up your environment configuration:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cp .env.example .env
+```
 
-## Contributing
+Edit the `.env` file to configure your database and other settings.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Generate Application Key
 
-## Code of Conduct
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Migrate and Seed the Database
 
-## Security Vulnerabilities
+Run migrations and seed the database with test data:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## License
+### 6. Start the Laravel Development Server
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`.
+
+## API Documentation
+
+### User Authentication
+
+**Endpoints:**
+- `POST /api/login` - User login
+- `POST /api/register` - User registration
+- `POST /api/password/reset` - Password recovery
+
+### Booking APIs
+
+#### Create Booking
+
+**Endpoint:** `POST /api/bookings`
+
+**Description:** Create a new booking.
+
+**Headers:**
+- `Authorization: Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "service_id": 1,
+    "booking_date": "2024-09-30T15:00:00Z"
+}
+```
+
+**Response:**
+- **201 Created**
+  ```json
+  {
+      "id": 1,
+      "service_id": 1,
+      "booking_date": "2024-09-30T15:00:00Z",
+      "status": "pending"
+  }
+  ```
+
+#### Update Booking
+
+**Endpoint:** `PUT /api/bookings/{id}`
+
+**Description:** Update an existing booking.
+
+**Headers:**
+- `Authorization: Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "booking_date": "2024-10-01T15:00:00Z"
+}
+```
+
+**Response:**
+- **200 OK**
+  ```json
+  {
+      "id": 1,
+      "service_id": 1,
+      "booking_date": "2024-10-01T15:00:00Z",
+      "status": "pending"
+  }
+  ```
+
+#### Delete Booking
+
+**Endpoint:** `DELETE /api/bookings/{id}`
+
+**Description:** Delete an existing booking.
+
+**Headers:**
+- `Authorization: Bearer <token>`
+
+**Response:**
+- **204 No Content**
+
+#### Confirm Booking
+
+**Endpoint:** `POST /api/bookings/{id}/confirm`
+
+**Description:** Confirm a booking.
+
+**Headers:**
+- `Authorization: Bearer <token>`
+
+**Response:**
+- **200 OK**
+  ```json
+  {
+      "id": 1,
+      "service_id": 1,
+      "booking_date": "2024-09-30T15:00:00Z",
+      "status": "confirmed"
+  }
+  ```
+
+### Service APIs
+
+#### Search Services
+
+**Endpoint:** `GET /api/services/search`
+
+**Description:** Search for services within a specified range.
+
+**Headers:**
+- `Authorization: Bearer <token>`
+
+**Query Parameters:**
+- `latitude` (required) - Latitude of the search location
+- `longitude` (required) - Longitude of the search location
+- `range` (optional) - Range in kilometers (default is 25)
+
+**Example Request:**
+```
+GET /api/services/search?latitude=31.5497&longitude=74.3436&range=25
+```
+
+**Response:**
+- **200 OK**
+  ```json
+  {
+      "message": "Services found",
+      "services": [
+          {
+              "id": 1,
+              "name": "House Cleaning",
+              "description": "Basic house cleaning service",
+              "price": 50.00,
+              "latitude": 31.5497,
+              "longitude": 74.3436,
+              "distance": 0.00
+          },
+          {
+              "id": 2,
+              "name": "Car Wash",
+              "description": "Complete car washing service",
+              "price": 25.00,
+              "latitude": 31.5497,
+              "longitude": 74.3436,
+              "distance": 10.00
+          }
+      ]
+  }
+  ```
+
+- **404 Not Found**
+  ```json
+  {
+      "message": "No services found within the specified range"
+  }
+  ```
+
+## User Guide
+
+### Authentication
+
+1. **Register a User**
+   - Send a `POST` request to `/api/register` with user details.
+
+2. **Login**
+   - Send a `POST` request to `/api/login` with email and password to obtain a Bearer token.
+
+3. **Use Token**
+   - Include the Bearer token in the `Authorization` header of your API requests.
+
+### Booking Operations
+
+#### Create a Booking
+
+1. **Endpoint:** `POST /api/bookings`
+2. **Headers:** Include `Authorization: Bearer <token>`
+3. **Request:** Provide `service_id` and `booking_date` in the request body.
+4. **Response:** On success, a new booking record is created.
+
+#### Update a Booking
+
+1. **Endpoint:** `PUT /api/bookings/{id}`
+2. **Headers:** Include `Authorization: Bearer <token>`
+3. **Request:** Provide updated `booking_date` in the request body.
+4. **Response:** The booking record is updated with the new date.
+
+#### Delete a Booking
+
+1. **Endpoint:** `DELETE /api/bookings/{id}`
+2. **Headers:** Include `Authorization: Bearer <token>`
+3. **Response:** The booking record is deleted.
+
+#### Confirm a Booking
+
+1. **Endpoint:** `POST /api/bookings/{id}/confirm`
+2. **Headers:** Include `Authorization: Bearer <token>`
+3. **Response:** The booking status is updated to confirmed.
+
+### Searching for Services
+
+1. **Endpoint:** `GET /api/services/search`
+2. **Headers:** Include `Authorization: Bearer <token>`
+3. **Query Parameters:**
+   - `latitude` and `longitude` are required.
+   - `range` is optional, default is 25 km.
+4. **Response:** A list of services within the specified range is returned. If no services are found, an appropriate message is displayed.
+
+## Error Handling
+
+- **404 Not Found:** Returned when no records match the search criteria.
+- **400 Bad Request:** Returned when required parameters are missing or invalid.
+
+---
+
+Feel free to adjust the details based on your specific implementation and requirements.
